@@ -40,7 +40,8 @@
 
     .head-title-text_span {
         letter-spacing: 1.2px;
-        font-size: 15px;
+        font-size: 18px;
+        font-weight: 500;
         line-height: 50px;
     }
 </style>

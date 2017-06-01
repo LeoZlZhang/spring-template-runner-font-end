@@ -6,13 +6,13 @@
         <div class="hero_div"></div>
         <div class="content_div">
             <v-tabs active-tab-key="1">
-                <v-tab-pane tab-key="1" tab="我的">
+                <v-tab-pane tab-key="1" tab="My">
                     <t-tc-catalog :data="table_data"></t-tc-catalog>
                 </v-tab-pane>
-                <v-tab-pane tab-key="2" tab="小组">
+                <v-tab-pane tab-key="2" tab="Team">
                     <t-tc-catalog :data="table_data"></t-tc-catalog>
                 </v-tab-pane>
-                <v-tab-pane tab-key="3" tab="所有">
+                <v-tab-pane tab-key="3" tab="All">
                     <t-tc-catalog :data="table_data"></t-tc-catalog>
                 </v-tab-pane>
             </v-tabs>

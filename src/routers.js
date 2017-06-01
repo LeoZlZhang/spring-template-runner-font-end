@@ -21,18 +21,20 @@ export const routers = () => [
     },
     {
         path: '/#', components: {menu: Menu, play_ground: MainPage},
-        children:[
-            {path:'page1',name: 'route_page1', components:{header: Header}}
+        children: [
+            {path: 'page1', components: {header: Header}, name: 'route_test_case_catalog'}
         ]
 
     },
     {path: '/home/page1', redirect: '/#/page1'},
+
     {
         path: '/#', components: {menu: Menu, play_ground: TestCasePage},
-        children:[
-            {path:'test_case',name: 'route_test_case'}
+        children: [
+            {path: 'test_case', name: 'route_test_case_edit'}
         ]
     },
     {path: '/home/test_case', redirect: '/#/test_case'},
+
     {path: `/*`, redirect: `/`},
 ];
