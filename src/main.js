@@ -1,13 +1,22 @@
 import Vue from 'vue'
 import App from './App.vue'
 import VueBeauty from 'vue-beauty';
-import 'vue-beauty/package/style/vue-beauty.css'
+import 'vue-beauty/package/style/vue-beauty.min.css'
+import Vuex from 'vuex'
+import VueResource from 'vue-resource'
 import VueRouter from 'vue-router'
 import {routers} from './routers'
+
+/**
+ * vue resource plugin for http client
+ */
+Vue.use(VueResource);
+
 /**
  * vue beauty web components
  */
 Vue.use(VueBeauty);
+
 
 /**
  * vue router plugin
@@ -19,11 +28,23 @@ const router = new VueRouter({
     routes: routers()
 });
 router.beforeEach((to, from, next) => {
-    to.path === '/' && to.hash ? next(to.fullPath.replace('#', 'home')) : next()
+    to.path === '/' && to.hash ? next(to.fullPath.replace('/#', '')) : next();
+});
+
+
+/**
+ * vuex plugin
+ */
+Vue.use(Vuex);
+const store = new Vuex.Store({
+    state: {
+        show_menu: false
+    }
 });
 
 new Vue({
-  el: '#app',
+    el: '#app',
     router,
-  render: h => h(App)
+    store,
+    render: h => h(App)
 });

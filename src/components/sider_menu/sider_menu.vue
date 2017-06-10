@@ -1,43 +1,65 @@
 <template>
-    <div class="container_div">
-        <div class="content_div">
-            <div v-for="item in data">
-                <router-link tag="div" :to="{name:item.href}">
-                    <a class="item_a">
-                        <span class="label_span">{{item.label}}</span>
-                        <span v-if="item.badge" class="badge_span">{{item.badge}}</span>
-                    </a>
-                </router-link>
+    <div @click.stop="">
+        <transition name="move-left">
+            <div class="container_div" v-if="show">
+                <div @click="folder" style="padding-left: 20px">
+                    <t-icon type="menu-fold" reverse_color></t-icon>
+                </div>
+                <div class="content_div">
+                    <div v-for="item in data">
+                        <router-link tag="div" :to="{name:item.href}">
+                            <a class="item_a">
+                                <span class="label_span">{{item.label}}</span>
+                                <span v-if="item.badge" class="badge_span">{{item.badge}}</span>
+                            </a>
+                        </router-link>
+                    </div>
+                </div>
             </div>
-        </div>
+        </transition>
     </div>
 </template>
 <script>
     import data from './menu_data'
+    import Icon from '../assessories/icon.vue'
     export default{
         data(){
             return {
                 data: data
             }
         },
+        computed: {
+            show(){
+                return this.$store.state.show_menu
+            }
+        },
+        methods: {
+            folder(){
+                this.$store.state.show_menu = false;
+            }
+        },
+        components:{
+          't-icon':Icon
+        },
+        mounted() {
+            let vm = this;
+            window.addEventListener('click', () => {
+                vm.$store.state.show_menu = false;
+            });
+        },
     }
 </script>
 <style scoped>
     .container_div {
+        display: block;
         position: fixed;
         width: 200px;
         height: 100vh;
         top: 0;
-        left: -199px;
-        padding: 50px 0;
         z-index: 99;
         background-color: rgba(61, 69, 77, 0.94);
         box-shadow: 0 0 10px 0 rgba(61, 69, 77, 1);
         transition: left 0.15s ease;
-    }
-
-    .container_div:hover {
-        left: -1px;
     }
 
     .content_div {
@@ -65,7 +87,7 @@
         background: #383f45;
     }
 
-    .label_span{
+    .label_span {
         letter-spacing: 1px;
     }
 
@@ -76,5 +98,4 @@
         padding: 0 4px;
         float: right
     }
-
 </style>

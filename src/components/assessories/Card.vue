@@ -23,18 +23,22 @@
     }
 
     .header_div {
-        font-size: 18px;
-        font-weight: 500
+        position: absolute;
+        top:0;
+        left: 0;
+        padding: 0 9px 0 0;
+        background: white;
+        font-size: 16px;
+        font-weight: 500;
     }
 
     .header-split_div {
         border-bottom: 1px solid rgba(229, 229, 229, 0.7);
         width: 100%;
         height: 15px;
-        margin-left: 5px
     }
 
     .content_div {
-        padding: 5px;
+        padding: 10px;
     }
 </style>
