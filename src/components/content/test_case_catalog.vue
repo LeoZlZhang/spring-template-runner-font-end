@@ -41,7 +41,7 @@
         methods: {
             click(){
                 let vm= this;
-                this.$http.get(`${HOST_URL}/v1/data/get_demo`)
+                this.$http.get(`v1/data/get_demo`)
                     .then(
                         (response) => {
                             console.log('demo request success', '----', response)

@@ -35,7 +35,7 @@
             },
             logout(){
                 let vm = this;
-                this.$http.post(`${HOST_URL}/logout`)
+                this.$http.post(`logout`)
                     .then(
                         (response) => {
 //                            auth_status.authenticated = false;

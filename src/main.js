@@ -7,11 +7,13 @@ import VueResource from 'vue-resource'
 import VueRouter from 'vue-router'
 import {routers} from './routers'
 
+
+let root_path = '/ee';
 /**
  * vue resource plugin for http client
  */
 Vue.use(VueResource);
-
+Vue.http.options.root = root_path;
 /**
  * vue beauty web components
  */
@@ -24,7 +26,7 @@ Vue.use(VueBeauty);
 Vue.use(VueRouter);
 const router = new VueRouter({
     mode: 'history',
-    base: CONTEXT_TPATH_FOR_ROUTE,
+    base: root_path,
     routes: routers()
 });
 router.beforeEach((to, from, next) => {

@@ -42,7 +42,7 @@
         methods: {
             login_submit(){
                 let vm = this;
-                this.$http.post(`${HOST_URL}/login?username=${this.username}&password=${this.password}`)
+                this.$http.post(`login?username=${this.username}&password=${this.password}`)
                     .then(
                         (response) => {
                             response.body.success ? redirectAfterLoginSuccess(vm) : vm.login_fail = true;
