@@ -2,17 +2,19 @@
     <div @click.stop="">
         <transition name="move-left">
             <div class="container_div" v-if="show">
-                <div @click="folder" style="padding-left: 20px">
+                <div @click="folder" style="padding: 13px;">
                     <t-icon type="menu-fold" reverse_color></t-icon>
                 </div>
                 <div class="content_div">
                     <div v-for="item in data">
-                        <router-link tag="div" :to="{name:item.href}">
-                            <a class="item_a">
-                                <span class="label_span">{{item.label}}</span>
-                                <span v-if="item.badge" class="badge_span">{{item.badge}}</span>
-                            </a>
-                        </router-link>
+                        <template v-if="my_roles.indexOf(item.access_role)>=0 ">
+                            <router-link tag="div" :to="{name:item.href}">
+                                <a class="item_a">
+                                    <span class="label_span">{{item.label}}</span>
+                                    <span v-if="item.badge" class="badge_span">{{item.badge}}</span>
+                                </a>
+                            </router-link>
+                        </template>
                     </div>
                 </div>
             </div>
@@ -25,21 +27,30 @@
     export default{
         data(){
             return {
-                data: data
+                data: data,
+                my_roles: []
             }
         },
         computed: {
             show(){
                 return this.$store.state.show_menu
-            }
+            },
         },
         methods: {
             folder(){
                 this.$store.state.show_menu = false;
             }
         },
-        components:{
-          't-icon':Icon
+        components: {
+            't-icon': Icon
+        },
+        activated(){
+            let vm = this;
+            this.$http.get('v1/user_profile/authorize/get')
+                .then(
+                    (response) => this.my_roles = response.body ? response.body : [],
+                    () => vm.$message.error("获取用户权限异常")
+                );
         },
         mounted() {
             let vm = this;

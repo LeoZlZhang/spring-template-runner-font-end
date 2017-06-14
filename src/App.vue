@@ -25,7 +25,6 @@
     .container_div {
         min-height: 100vh;
         background-color: rgba(118, 215, 196, 0.01);
-
     }
 
 </style>

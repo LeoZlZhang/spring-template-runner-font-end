@@ -11,7 +11,6 @@ export const redirect403Response = (vm, response) => {
 
 export const redirectAfterLoginSuccess = (vm) => {
     if (redirect.path) {
-        console.log('===redirect login===',redirect.path)
         vm.$router.push({path: redirect.path});
         redirect.path = null;
     } else {

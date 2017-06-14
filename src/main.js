@@ -7,8 +7,6 @@ import VueResource from 'vue-resource'
 import VueRouter from 'vue-router'
 import {routers} from './routers'
 
-
-let root_path = '/ee';
 /**
  * vue resource plugin for http client
  */

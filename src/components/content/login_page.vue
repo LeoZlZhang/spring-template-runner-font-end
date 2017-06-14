@@ -7,15 +7,17 @@
                     <img src="../../assets/logo.png" style="height: 40px;margin: 30px auto;display: block"/>
                 </div>
                 <v-form direction="horizontal">
-                    <v-form-item required>
-                        <v-input placeholder="用户名" style="opacity: 0.9" v-model="username">
-                            <v-icon type="user" slot="before"></v-icon>
-                        </v-input>
+                    <v-form-item>
+                        <span class="ant-input-wrapper ant-input-group" style="opacity: 0.9">
+                            <span class="ant-input-group-addon"><i class="anticon anticon-user"></i> </span>
+                            <input type="text" class="ant-input" placeholder="用户名" v-model="username" @keyup.enter="login_submit"/>
+                        </span>
                     </v-form-item>
                     <v-form-item required>
-                        <v-input placeholder="密码" type="password" style="opacity: 0.9" v-model="password">
-                            <v-icon type="lock" slot="before"></v-icon>
-                        </v-input>
+                        <span class="ant-input-wrapper ant-input-group" style="opacity: 0.9">
+                            <span class="ant-input-group-addon"><i class="anticon anticon-lock"></i> </span>
+                            <input type="password" class="ant-input" placeholder="密码" v-model="password" @keyup.enter="login_submit"/>
+                        </span>
                     </v-form-item>
                     <v-form-item>
                         <v-button type="default" style="width: 100%;opacity: 0.9"
@@ -36,21 +38,31 @@
             return {
                 username: '',
                 password: '',
-                login_fail: false
             }
         },
         methods: {
             login_submit(){
                 let vm = this;
-                this.$http.post(`login?username=${this.username}&password=${this.password}`)
-                    .then(
-                        (response) => {
-                            response.body.success ? redirectAfterLoginSuccess(vm) : vm.login_fail = true;
-                        },
-                        () => {
-                            vm.login_fail = true;
-                        });
-            }
+                if (debug) {
+                    vm.$store.state.authorizes = ['ROLE_ADMIN'];
+                    redirectAfterLoginSuccess(vm);
+                } else {
+                    this.$http.post(`login?username=${this.username}&password=${this.password}`)
+                        .then(
+                            (response) => {
+                                if (response.body.success) {
+                                    redirectAfterLoginSuccess(vm);
+                                } else if (response.body.reason) {
+                                    vm.$message.error(response.body.reason === 'bad' ? '用户名或密码错误' :
+                                        response.body.reason === 'disabled' ? '未激活用户' :
+                                            response.body.reason === 'locked' ? '用户被锁定' : '未知原因', 2)
+                                }
+                            },
+                            () => {
+                                vm.$message.error("请求异常", 2)
+                            });
+                }
+            },
         },
         components: {
             't-nebular': Nebular
@@ -66,7 +78,6 @@
         width: 100vw;
         height: 100vh;
         display: flex;
-        /*justify-content: center;*/
     }
 
     .login-form_div {

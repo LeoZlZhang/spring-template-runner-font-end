@@ -11,9 +11,7 @@
 </script>
 <style scoped>
     .folder_icon {
-        font-size: 18px;
-        line-height: 45px;
-        margin-top: 5px;
+        font-size: 25px;
         cursor: pointer
     }
 </style>
