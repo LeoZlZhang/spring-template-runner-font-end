@@ -46,11 +46,15 @@
         },
         activated(){
             let vm = this;
-            this.$http.get('v1/user_profile/authorize/get')
-                .then(
-                    (response) => this.my_roles = response.body ? response.body : [],
-                    () => vm.$message.error("获取用户权限异常")
-                );
+            if (debug) {
+                this.my_roles = ['ROLE_ADMIN','ROLE_USER']
+            } else {
+                this.$http.get('v1/user_profile/authorize')
+                    .then(
+                        (response) => this.my_roles = response.body ? response.body : [],
+                        () => vm.$message.error("获取用户权限异常")
+                    );
+            }
         },
         mounted() {
             let vm = this;

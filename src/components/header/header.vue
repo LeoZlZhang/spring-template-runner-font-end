@@ -10,7 +10,7 @@
             <div style="display: flex;">
                 <div @click.stop="" class="head-avatar-container_div">
                     <v-tooltip :content="`Welcome ${userDspName}`" placement="bottom">
-                        <img :src="`${root_path}/v1/user_profile/avatar/get?identity=${userDspName}`" class="head-avatar_img"/>
+                        <img :src="`${root_path}/v1/user_profile/avatar?identity=${userDspName}`" class="head-avatar_img"/>
                     </v-tooltip>
                 </div>
                 <div @click.stop="logout" class="head-icon-container_div">
@@ -59,10 +59,10 @@
         },
         activated(){
             let vm = this;
-            this.$http.get(`v1/user_profile/dspName/get`)
+            this.$http.get(`v1/user_profile/dspName`)
                 .then(
                     (response) => this.userDspName = response.bodyText ? response.bodyText : '',
-                    () => vm.$message.error("获取用户权限异常")
+                    () => vm.$message.error("获取用信息户异常")
                 );
         },
         created(){
